@@ -9,9 +9,15 @@ public class CreateProductTest extends BaseTest {
     public void createNewProduct(String login, String password) {
         // TODO implement test for product creation
 
-        // actions.login(login, password);
+         actions.login(login, password);
         // ...
     }
 
     // TODO implement logic to check product visibility on website
+
+//    @Test(dependsOnMethods = {"createNewProduct"})
+//    public void checkProduct() {
+//
+//    }
+
 }
