@@ -34,12 +34,12 @@ public abstract class BaseTest {
                         "webdriver.gecko.driver",
                         getResource("/geckodriver.exe"));
                 return new FirefoxDriver();
-            case "ie":
-            case "internet explorer":
-                System.setProperty(
-                        "webdriver.ie.driver",
-                        getResource("/IEDriverServer.exe"));
-                return new InternetExplorerDriver();
+//            case "ie":
+//            case "internet explorer":
+//                System.setProperty(
+//                        "webdriver.ie.driver",
+//                        getResource("/IEDriverServer.exe"));
+//                return new InternetExplorerDriver();
             case "chrome":
             default:
                 System.setProperty(

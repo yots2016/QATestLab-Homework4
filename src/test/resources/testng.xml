@@ -17,13 +17,13 @@
         <!--configure test to execute testing script using Chrome browser-->
     </test>
 
-    <test name="Create New Product [Internet Explorer]" >
-        <parameter name="browser" value="ie"/>
-        <packages>
-            <package name="myprojects.automation.assignment4.*"/>
-        </packages>
-        <!--configure test to execute testing script using Chrome browser-->
-    </test>
+    <!--<test name="Create New Product [Internet Explorer]" >-->
+        <!--<parameter name="browser" value="ie"/>-->
+        <!--<packages>-->
+            <!--<package name="myprojects.automation.assignment4.*"/>-->
+        <!--</packages>-->
+        <!--&lt;!&ndash;configure test to execute testing script using Chrome browser&ndash;&gt;-->
+    <!--</test>-->
 
     <!--Prepare test for firefox and IE browsers-->
 

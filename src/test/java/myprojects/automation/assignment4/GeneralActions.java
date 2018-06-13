@@ -31,15 +31,10 @@ public class GeneralActions {
 //        throw new UnsupportedOperationException();
 
         driver.get(Properties.getBaseAdminUrl());
-
-        WebElement emailWebElement = driver.findElement(By.id("email"));
-        emailWebElement.sendKeys(login);
-
-        WebElement passwordWebElement = driver.findElement(By.id("passwd"));
-        passwordWebElement.sendKeys(password);
-
-        WebElement loginButtonWebElement = driver.findElement(By.name("submitLogin"));
-        loginButtonWebElement.click();
+        driver.findElement(By.id("email")).sendKeys(login);
+        driver.findElement(By.id("passwd")).sendKeys(password);
+        driver.findElement(By.name("submitLogin")).click();
+        waitForContentLoad(By.id("main"));
     }
 
     public void createProduct(ProductData newProduct) {
