@@ -15,6 +15,10 @@ import java.util.ArrayList;
 
 public class CreateProductTest extends BaseTest {
 
+    private String productName;
+    private String quantityProduct;
+    private String priceProduct;
+
     @DataProvider
     public Object[][] getLoginData() {
         return new String[][] {
@@ -27,26 +31,28 @@ public class CreateProductTest extends BaseTest {
         // TODO implement test for product creation
 
         actions.login(login, password);
+
         waitForContentLoad(By.id("subtab-AdminCatalog")).click();
         driver.findElement(By.id("page-header-desc-configuration-add")).click();
-        String productName = ProductData.generate().getName();
+        productName = ProductData.generate().getName();
         waitForContentLoad(By.id("form_step1_name_1")).sendKeys(productName);
-        String quantityProduct = ProductData.generate().getQty().toString();
+        quantityProduct = ProductData.generate().getQty().toString();
         driver.findElement(By.id("form_step1_qty_0_shortcut")).sendKeys(quantityProduct);
         WebElement priceForm = driver.findElement(By.id("form_step1_price_shortcut"));
         priceForm.sendKeys("\b\b\b\b\b\b\b\b");
-        String priceProduct = ProductData.generate().getPrice();
+        priceProduct = ProductData.generate().getPrice();
         priceForm.sendKeys(priceProduct);
         new Actions(driver).keyDown(Keys.CONTROL).sendKeys("o").perform();
         waitForContentLoad(By.className("growl-close")).click();
         driver.findElement(By.xpath("//*[@class=\"btn btn-primary js-btn-save\"]")).click();
         waitForContentLoad(By.className("growl-close")).click();
+    }
 
+    @Test (dependsOnMethods = {"createNewProduct"})
+    public void checkingProductDisplay() {
         driver.get(Properties.getBaseUrl());
         waitForContentLoad(By.xpath("//*[@id=\"content\"]/section/a")).click();
-        ArrayList<String> tabs = new ArrayList(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-
+        driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(1));
 
         WebElement serchField = waitForContentLoad(By.xpath("//*[@id=\"search_widget\"]//*[@name=\"s\"]"));
         serchField.sendKeys(Keys.BACK_SPACE);
@@ -76,34 +82,9 @@ public class CreateProductTest extends BaseTest {
         String productPriceAfterOpen = productPriceElementAfterOpen.getAttribute("content");
         productPriceAfterOpen = productPriceAfterOpen.replace('.', ',');
         Assert.assertEquals(productPriceAfterOpen, priceProduct);
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
     }
-
-    // TODO implement logic to check product visibility on website
-
-//    @Test(dependsOnMethods = {"createNewProduct"})
-//    public void checkProduct() {
-//
-//    }
 
     public WebElement waitForContentLoad(By by) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
-    }
-
-    public static void clickOnInvisibleElement(WebElement element, WebDriver driver) {
-
-        String script = "var object = arguments[0];"
-                + "var theEvent = document.createEvent(\"MouseEvent\");"
-                + "theEvent.initMouseEvent(\"click\", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);"
-                + "object.dispatchEvent(theEvent);"
-                ;
-
-        ((JavascriptExecutor)driver).executeScript(script, element);
     }
 }
