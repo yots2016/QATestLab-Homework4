@@ -1,6 +1,9 @@
 package myprojects.automation.assignment4.tests;
 
 import myprojects.automation.assignment4.BaseTest;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -17,8 +20,16 @@ public class CreateProductTest extends BaseTest {
     public void createNewProduct(String login, String password) {
         // TODO implement test for product creation
 
-         actions.login(login, password);
-        // ...
+        actions.login(login, password);
+        waitForContentLoad(By.id("subtab-AdminCatalog")).click();
+
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     // TODO implement logic to check product visibility on website
@@ -28,4 +39,7 @@ public class CreateProductTest extends BaseTest {
 //
 //    }
 
+    public WebElement waitForContentLoad(By by) {
+        return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
 }

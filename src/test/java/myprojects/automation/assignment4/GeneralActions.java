@@ -3,6 +3,7 @@ package myprojects.automation.assignment4;
 
 import myprojects.automation.assignment4.model.ProductData;
 import myprojects.automation.assignment4.utils.Properties;
+import myprojects.automation.assignment4.utils.logging.CustomReporter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,7 +29,7 @@ public class GeneralActions {
      */
     public void login(String login, String password) {
         // TODO implement logging in to Admin Panel
-//        throw new UnsupportedOperationException();
+        CustomReporter.logAction("user login");
 
         driver.get(Properties.getBaseAdminUrl());
         driver.findElement(By.id("email")).sendKeys(login);
@@ -47,11 +48,6 @@ public class GeneralActions {
      * @param by
      */
     public WebElement waitForContentLoad(By by) {
-        // TODO implement generic method to wait until page content is loaded
-
-        // wait.until(...);
-        // ...
-
         return wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 }
