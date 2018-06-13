@@ -47,7 +47,7 @@ public abstract class BaseTest {
             default:
                 System.setProperty(
                         "webdriver.chrome.driver",
-                        getResource("/chromedriver.exe"));
+                        getResource("/chromedriver"));
                 return new ChromeDriver();
         }
     }
