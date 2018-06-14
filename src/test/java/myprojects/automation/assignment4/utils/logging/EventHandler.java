@@ -34,6 +34,7 @@ public class EventHandler implements WebDriverEventListener {
 
     @Override
     public void afterNavigateTo(String url, WebDriver driver) {
+        CustomReporter.log("Was navigate to " + url);
     }
 
     @Override

@@ -28,19 +28,20 @@ public class GeneralActions {
      * @param password
      */
     public void login(String login, String password) {
-        // TODO implement logging in to Admin Panel
         CustomReporter.logAction("user login");
 
         driver.get(Properties.getBaseAdminUrl());
         driver.findElement(By.id("email")).sendKeys(login);
         driver.findElement(By.id("passwd")).sendKeys(password);
         driver.findElement(By.name("submitLogin")).click();
+
+        CustomReporter.logAction("enter to admin panel");
         waitForContentLoad(By.id("main"));
     }
 
-    public void createProduct(ProductData newProduct) {
-        // TODO implement product creation scenario
-        throw new UnsupportedOperationException();
+    public ProductData createProduct() {
+        CustomReporter.logAction("generate product data");
+        return ProductData.generate();
     }
 
     /**

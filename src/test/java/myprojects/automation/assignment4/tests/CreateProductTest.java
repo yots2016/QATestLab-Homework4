@@ -28,22 +28,24 @@ public class CreateProductTest extends BaseTest {
 
     @Test (dataProvider = "getLoginData")
     public void createNewProduct(String login, String password) {
-        // TODO implement test for product creation
-
         actions.login(login, password);
 
         waitForContentLoad(By.id("subtab-AdminCatalog")).click();
         driver.findElement(By.id("page-header-desc-configuration-add")).click();
-        productName = ProductData.generate().getName();
+        productName = actions.createProduct().getName();
         waitForContentLoad(By.id("form_step1_name_1")).sendKeys(productName);
-        quantityProduct = ProductData.generate().getQty().toString();
+
+        quantityProduct = actions.createProduct().getQty().toString();
         driver.findElement(By.id("form_step1_qty_0_shortcut")).sendKeys(quantityProduct);
         WebElement priceForm = driver.findElement(By.id("form_step1_price_shortcut"));
         priceForm.sendKeys("\b\b\b\b\b\b\b\b");
-        priceProduct = ProductData.generate().getPrice();
+
+        priceProduct = actions.createProduct().getPrice();
         priceForm.sendKeys(priceProduct);
+
         new Actions(driver).keyDown(Keys.CONTROL).sendKeys("o").perform();
         waitForContentLoad(By.className("growl-close")).click();
+
         driver.findElement(By.xpath("//*[@class=\"btn btn-primary js-btn-save\"]")).click();
         waitForContentLoad(By.className("growl-close")).click();
     }
@@ -68,15 +70,13 @@ public class CreateProductTest extends BaseTest {
 
         WebElement productNameElementAfterOpen = driver.findElement(By.xpath("//*[@id=\"main\"]/div[1]/div[2]/h1"));
         String productNameAfterOpen = productNameElementAfterOpen.getText();
-        productName = productName.toUpperCase();
-        Assert.assertEquals(productNameAfterOpen, productName);
+        Assert.assertEquals(productNameAfterOpen, productName.toUpperCase());
 
         WebElement productQuantityElementAfterOpen = driver.findElement(By
                 .xpath("//*[@class=\"product-quantities\"]/span"));
         String productQuantityAfterOpen = productQuantityElementAfterOpen.getText();
-        productQuantityAfterOpen = productQuantityAfterOpen.split(" ")[0];
-        Assert.assertEquals(productQuantityAfterOpen, quantityProduct);
-//
+        Assert.assertEquals(productQuantityAfterOpen.split(" ")[0], quantityProduct);
+
         WebElement productPriceElementAfterOpen = driver.findElement(By
                 .xpath("//*[@id=\"main\"]/div[1]/div[2]/div[1]/div[1]/div/span"));
         String productPriceAfterOpen = productPriceElementAfterOpen.getAttribute("content");
