@@ -11,6 +11,9 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.ArrayList;
 
 public class CreateProductTest extends BaseTest {
@@ -27,7 +30,7 @@ public class CreateProductTest extends BaseTest {
     }
 
     @Test (dataProvider = "getLoginData")
-    public void createNewProduct(String login, String password) {
+    public void createNewProduct(String login, String password) throws InterruptedException {
         actions.login(login, password);
 
         waitForContentLoad(By.id("subtab-AdminCatalog")).click();
@@ -38,7 +41,7 @@ public class CreateProductTest extends BaseTest {
         quantityProduct = actions.createProduct().getQty().toString();
         driver.findElement(By.id("form_step1_qty_0_shortcut")).sendKeys(quantityProduct);
         WebElement priceForm = driver.findElement(By.id("form_step1_price_shortcut"));
-        priceForm.sendKeys("\b\b\b\b\b\b\b\b");
+        priceForm.sendKeys(Keys.CONTROL + "a");
 
         priceProduct = actions.createProduct().getPrice();
         priceForm.sendKeys(priceProduct);
@@ -51,17 +54,26 @@ public class CreateProductTest extends BaseTest {
     }
 
     @Test (dependsOnMethods = {"createNewProduct"})
-    public void checkingProductDisplay() {
+    public void checkingProductDisplay() throws InterruptedException {
         driver.get(Properties.getBaseUrl());
+
         waitForContentLoad(By.xpath("//*[@id=\"content\"]/section/a")).click();
-        driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(1));
+        Thread.sleep(3000);
 
         WebElement serchField = waitForContentLoad(By.xpath("//*[@id=\"search_widget\"]//*[@name=\"s\"]"));
-        serchField.sendKeys(Keys.BACK_SPACE);
-        serchField.sendKeys(productName);
-        serchField.submit();
 
-        WebElement productNameElementAfterSearch = driver.findElement(By
+        new Actions(driver).moveToElement(serchField).click(serchField).build().perform();
+
+        StringSelection selection = new StringSelection(productName);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(selection, selection);
+
+        serchField.sendKeys(Keys.BACK_SPACE);
+        serchField.sendKeys(Keys.CONTROL + "v");
+        serchField.submit();
+        Thread.sleep(3000);
+
+        WebElement productNameElementAfterSearch = waitForContentLoad(By
                 .xpath("//*[@id=\"js-product-list\"]//*[@class=\"h3 product-title\"]/a"));
         String productNameAfterSearch = productNameElementAfterSearch.getText();
         Assert.assertEquals(productNameAfterSearch, productName);

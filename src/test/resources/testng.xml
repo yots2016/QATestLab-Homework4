@@ -6,13 +6,13 @@
     <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
     </listeners>
 
-    <test name="Create New Product [Chrome]" >
-        <parameter name="browser" value="chrome"/>
-        <packages>
-            <package name="myprojects.automation.assignment4.tests"/>
-        </packages>
-        <!--configure test to execute testing script using Chrome browser-->
-    </test>
+    <!--<test name="Create New Product [Chrome]" >-->
+        <!--<parameter name="browser" value="chrome"/>-->
+        <!--<packages>-->
+            <!--<package name="myprojects.automation.assignment4.tests"/>-->
+        <!--</packages>-->
+        <!--&lt;!&ndash;configure test to execute testing script using Chrome browser&ndash;&gt;-->
+    <!--</test>-->
 
     <!--<test name="Create New Product [Firefox]" >-->
         <!--<parameter name="browser" value="firefox"/>-->
@@ -22,13 +22,13 @@
         <!--&lt;!&ndash;configure test to execute testing script using Chrome browser&ndash;&gt;-->
     <!--</test>-->
 
-    <!--<test name="Create New Product [Internet Explorer]" >-->
-        <!--<parameter name="browser" value="ie"/>-->
-        <!--<packages>-->
-            <!--<package name="myprojects.automation.assignment4.tests"/>-->
-        <!--</packages>-->
-        <!--&lt;!&ndash;configure test to execute testing script using Chrome browser&ndash;&gt;-->
-    <!--</test>-->
+    <test name="Create New Product [Internet Explorer]" >
+        <parameter name="browser" value="ie"/>
+        <packages>
+            <package name="myprojects.automation.assignment4.tests"/>
+        </packages>
+        <!--configure test to execute testing script using Chrome browser-->
+    </test>
 
 
 </suite>
