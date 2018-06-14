@@ -1,10 +1,8 @@
 package myprojects.automation.assignment4.tests;
 
 import myprojects.automation.assignment4.BaseTest;
-import myprojects.automation.assignment4.model.ProductData;
 import myprojects.automation.assignment4.utils.Properties;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -14,7 +12,6 @@ import org.testng.annotations.Test;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.util.ArrayList;
 
 public class CreateProductTest extends BaseTest {
 
@@ -30,7 +27,7 @@ public class CreateProductTest extends BaseTest {
     }
 
     @Test (dataProvider = "getLoginData")
-    public void createNewProduct(String login, String password) throws InterruptedException {
+    public void createNewProduct(String login, String password) {
         actions.login(login, password);
 
         waitForContentLoad(By.id("subtab-AdminCatalog")).click();
@@ -54,11 +51,15 @@ public class CreateProductTest extends BaseTest {
     }
 
     @Test (dependsOnMethods = {"createNewProduct"})
-    public void checkingProductDisplay() throws InterruptedException {
+    public void checkingProductDisplay() {
         driver.get(Properties.getBaseUrl());
 
         waitForContentLoad(By.xpath("//*[@id=\"content\"]/section/a")).click();
-        Thread.sleep(3000);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         WebElement serchField = waitForContentLoad(By.xpath("//*[@id=\"search_widget\"]//*[@name=\"s\"]"));
 
@@ -71,7 +72,11 @@ public class CreateProductTest extends BaseTest {
         serchField.sendKeys(Keys.BACK_SPACE);
         serchField.sendKeys(Keys.CONTROL + "v");
         serchField.submit();
-        Thread.sleep(3000);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         WebElement productNameElementAfterSearch = waitForContentLoad(By
                 .xpath("//*[@id=\"js-product-list\"]//*[@class=\"h3 product-title\"]/a"));

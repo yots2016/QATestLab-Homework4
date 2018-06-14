@@ -8,10 +8,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 import java.net.URISyntaxException;
@@ -76,7 +74,7 @@ public abstract class BaseTest {
      */
     @BeforeClass
     @Parameters("browser")
-    public void setUp(@Optional("ie") String browser) {
+    public void setUp(String browser) {
         driver = new EventFiringWebDriver(getDriver(browser));
         driver.register(new EventHandler());
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
