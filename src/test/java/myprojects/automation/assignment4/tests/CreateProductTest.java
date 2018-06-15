@@ -55,11 +55,6 @@ public class CreateProductTest extends BaseTest {
         driver.get(Properties.getBaseUrl());
 
         waitForContentLoad(By.xpath("//*[@id=\"content\"]/section/a")).click();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         WebElement serchField = waitForContentLoad(By.xpath("//*[@id=\"search_widget\"]//*[@name=\"s\"]"));
 
@@ -72,14 +67,12 @@ public class CreateProductTest extends BaseTest {
         serchField.sendKeys(Keys.BACK_SPACE);
         serchField.sendKeys(Keys.CONTROL + "v");
         serchField.submit();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        WebElement productNameElementAfterSearch = waitForContentLoad(By
-                .xpath("//*[@id=\"js-product-list\"]//*[@class=\"h3 product-title\"]/a"));
+        By productNameLocator = By
+                .xpath("//*[@id=\"js-product-list\"]//*[@class=\"h3 product-title\"]/a");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productNameLocator));
+        WebElement productNameElementAfterSearch = waitForContentLoad(productNameLocator);
+
         String productNameAfterSearch = productNameElementAfterSearch.getText();
         Assert.assertEquals(productNameAfterSearch, productName);
 
@@ -99,6 +92,12 @@ public class CreateProductTest extends BaseTest {
                 .xpath("//*[@id=\"main\"]//*[@class=\"current-price\"]/span[@itemprop=\"price\"]"));
         String productPriceAfterOpen = productPriceElementAfterOpen.getAttribute("content");
         productPriceAfterOpen = productPriceAfterOpen.replace('.', ',');
+
+        char lastSymbol = productPriceAfterOpen.charAt(productPriceAfterOpen.length() - 1);
+        if (lastSymbol == '0') {
+            priceProduct = priceProduct + '0';
+        }
+
         Assert.assertEquals(productPriceAfterOpen, priceProduct);
     }
 
