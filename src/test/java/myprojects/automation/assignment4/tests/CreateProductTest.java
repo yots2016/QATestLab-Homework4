@@ -41,6 +41,7 @@ public class CreateProductTest extends BaseTest {
         priceForm.sendKeys(Keys.CONTROL + "a");
 
         priceProduct = actions.createProduct().getPrice();
+//        priceProduct = "34,40";
         priceForm.sendKeys(priceProduct);
 
         new Actions(driver).keyDown(Keys.CONTROL).sendKeys("o").perform();
@@ -93,15 +94,14 @@ public class CreateProductTest extends BaseTest {
         String productPriceAfterOpen = productPriceElementAfterOpen.getAttribute("content");
         productPriceAfterOpen = productPriceAfterOpen.replace('.', ',');
 
-        checkPriceForZero(productPriceAfterOpen);
+        checkPriceForZero();
 
         Assert.assertEquals(productPriceAfterOpen, priceProduct);
     }
 
-    private void checkPriceForZero(String productPriceAfterOpen) {
-        char lastSymbol = productPriceAfterOpen.charAt(productPriceAfterOpen.length() - 1);
-        if (lastSymbol == '0') {
-            priceProduct = priceProduct + '0';
+    private void checkPriceForZero() {
+        if (priceProduct.charAt(priceProduct.length() - 1) == '0') {
+            priceProduct = priceProduct.substring(0, priceProduct.length()-1);
         }
     }
 
