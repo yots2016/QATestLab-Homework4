@@ -46,7 +46,7 @@ public class CreateProductTest extends BaseTest {
         new Actions(driver).keyDown(Keys.CONTROL).sendKeys("o").perform();
         waitForContentLoad(By.className("growl-close")).click();
 
-        driver.findElement(By.xpath("//*[@class=\"btn btn-primary js-btn-save\"]")).click();
+        waitForContentLoad(By.xpath("//*[@class=\"btn btn-primary js-btn-save\"]")).click();
         waitForContentLoad(By.className("growl-close")).click();
     }
 
