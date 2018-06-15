@@ -36,7 +36,7 @@ public abstract class BaseTest {
             case "firefox":
                 System.setProperty(
                         "webdriver.gecko.driver",
-                        getResource("/geckodriver"));
+                        getResource("/geckodriver.exe"));
                 return new FirefoxDriver();
             case "ie":
             case "internet explorer":
@@ -48,7 +48,7 @@ public abstract class BaseTest {
             default:
                 System.setProperty(
                         "webdriver.chrome.driver",
-                        getResource("/chromedriver"));
+                        getResource("/chromedriver.exe"));
                 return new ChromeDriver();
         }
     }
@@ -75,7 +75,7 @@ public abstract class BaseTest {
      */
     @BeforeClass
     @Parameters("browser")
-    public void setUp(@Optional("firefox") String browser) {
+    public void setUp(@Optional("chrome") String browser) {
         driver = new EventFiringWebDriver(getDriver(browser));
         driver.register(new EventHandler());
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
