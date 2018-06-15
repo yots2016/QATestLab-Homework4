@@ -85,7 +85,8 @@ public class CreateProductTest extends BaseTest {
 
         productNameElementAfterSearch.click();
 
-        WebElement productNameElementAfterOpen = driver.findElement(By.xpath("//*[@id=\"main\"]/div[1]/div[2]/h1"));
+        WebElement productNameElementAfterOpen = driver.findElement(By
+                .xpath("//*[@id=\"main\"]//*[@class=\"col-md-6\"]/h1[@itemprop=\"name\"]"));
         String productNameAfterOpen = productNameElementAfterOpen.getText();
         Assert.assertEquals(productNameAfterOpen, productName.toUpperCase());
 
@@ -95,7 +96,7 @@ public class CreateProductTest extends BaseTest {
         Assert.assertEquals(productQuantityAfterOpen.split(" ")[0], quantityProduct);
 
         WebElement productPriceElementAfterOpen = driver.findElement(By
-                .xpath("//*[@id=\"main\"]/div[1]/div[2]/div[1]/div[1]/div/span"));
+                .xpath("//*[@id=\"main\"]//*[@class=\"current-price\"]/span[@itemprop=\"price\"]"));
         String productPriceAfterOpen = productPriceElementAfterOpen.getAttribute("content");
         productPriceAfterOpen = productPriceAfterOpen.replace('.', ',');
         Assert.assertEquals(productPriceAfterOpen, priceProduct);

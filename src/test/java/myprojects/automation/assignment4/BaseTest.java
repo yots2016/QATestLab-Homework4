@@ -10,6 +10,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 import java.net.URISyntaxException;
@@ -35,7 +36,7 @@ public abstract class BaseTest {
             case "firefox":
                 System.setProperty(
                         "webdriver.gecko.driver",
-                        getResource("/geckodriver.exe"));
+                        getResource("/geckodriver"));
                 return new FirefoxDriver();
             case "ie":
             case "internet explorer":
@@ -47,7 +48,7 @@ public abstract class BaseTest {
             default:
                 System.setProperty(
                         "webdriver.chrome.driver",
-                        getResource("/chromedriver.exe"));
+                        getResource("/chromedriver"));
                 return new ChromeDriver();
         }
     }
@@ -74,7 +75,7 @@ public abstract class BaseTest {
      */
     @BeforeClass
     @Parameters("browser")
-    public void setUp(String browser) {
+    public void setUp(@Optional("chrome") String browser) {
         driver = new EventFiringWebDriver(getDriver(browser));
         driver.register(new EventHandler());
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
