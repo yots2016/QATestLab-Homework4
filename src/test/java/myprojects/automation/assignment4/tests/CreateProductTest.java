@@ -93,12 +93,16 @@ public class CreateProductTest extends BaseTest {
         String productPriceAfterOpen = productPriceElementAfterOpen.getAttribute("content");
         productPriceAfterOpen = productPriceAfterOpen.replace('.', ',');
 
+        checkPriceForZero(productPriceAfterOpen);
+
+        Assert.assertEquals(productPriceAfterOpen, priceProduct);
+    }
+
+    private void checkPriceForZero(String productPriceAfterOpen) {
         char lastSymbol = productPriceAfterOpen.charAt(productPriceAfterOpen.length() - 1);
         if (lastSymbol == '0') {
             priceProduct = priceProduct + '0';
         }
-
-        Assert.assertEquals(productPriceAfterOpen, priceProduct);
     }
 
     public WebElement waitForContentLoad(By by) {
